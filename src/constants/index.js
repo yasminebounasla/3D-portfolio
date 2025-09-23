@@ -117,7 +117,7 @@ const projects = [
         color: "yellow-text-gradient",
       },
       {
-        name: "H",
+        name: "Html",
         color: "green-text-gradient",
       },
       {
