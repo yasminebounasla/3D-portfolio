@@ -56,5 +56,6 @@ export {
   prisma,
   herobg,
   web,
+  java,
   c
 };
