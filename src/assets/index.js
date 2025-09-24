@@ -28,6 +28,7 @@ import weatherApp from "./weatherApp.png";
 import collabNote from "./collabNote.png";
 import chefClaude from "./chefClaude.png";
 import web from "./web.png";
+import soon from "./soon.png"
 
 export {
   logo,
@@ -57,5 +58,6 @@ export {
   herobg,
   web,
   java,
-  c
+  c,
+  soon
 };
