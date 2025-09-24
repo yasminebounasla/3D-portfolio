@@ -92,10 +92,6 @@ const technologies = [
     name: "Express",
     icon: express,
   },
-  {
-    name: "React Native",
-    icon: reactjs,
-  },
    {
     name: "Java",
     icon: java,
