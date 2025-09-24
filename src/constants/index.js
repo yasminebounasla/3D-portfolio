@@ -15,7 +15,8 @@ import {
   collabNote,
   chefClaude,
   travelJournal,
-  weatherApp
+  weatherApp,
+  web
 } from "../assets";
 
 export const navLinks = [
@@ -35,9 +36,17 @@ export const navLinks = [
 
 const services = [
   {
+    title: "web Developer",
+    icon: web,
+  },
+  {
+    title: "React Native Developer",
+    icon: mobile,
+  },
+  {
     title: "Backend Developer",
     icon: backend,
-  },
+  }
 ];
 
 const technologies = [

@@ -24,7 +24,8 @@ import tripguide from "./tripguide.png";
 import travelJournal from "./travelJournal.png";
 import weatherApp from "./weatherApp.png";
 import collabNote from "./collabNote.png";
-import chefClaude from "./chefClaude.png"
+import chefClaude from "./chefClaude.png";
+import web from "./web.png";
 
 export {
   logo,
@@ -51,5 +52,6 @@ export {
   chefClaude,
   express,
   prisma,
-  herobg
+  herobg,
+  web
 };
