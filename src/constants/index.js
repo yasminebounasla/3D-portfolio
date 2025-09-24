@@ -153,7 +153,7 @@ const projects = [
       },
       {
         name: "css",
-        color: "yellow-text-gradient",
+        color: "purple-text-gradient",
       },
     ],
     image: chefClaude,
@@ -190,7 +190,7 @@ const projects = [
     tags: [
       {
         name: "javascript",
-        color: "yellow-text-gradient",
+        color: "blue-text-gradient",
       },
       {
         name: "Html",
@@ -211,7 +211,7 @@ const projects = [
     tags: [
       {
         name: "React-Native",
-        color: "yellow-text-gradient",
+        color: "blue-text-gradient",
       },
       {
         name: "tailwind",

@@ -79,7 +79,7 @@ const Works = () => {
           variants={fadeIn("", "", 0.1, 1)}
           className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
         >
-          The following projects highlight my web development skills, especially in building and managing backends with Express.js, MongoDB, and REST APIs. Each project is briefly described with links to the code repositories. They reflect my ability to design databases, handle server-side logic, integrate APIs, and create complete full-stack solutions.
+          The following projects showcase my full-stack development skills across web and mobile. They include backend work with Express.js, MongoDB, and REST APIs, as well as frontend development with React for the web and React Native for mobile. Each project is briefly described with links to the code repositories. They reflect my ability to design databases, handle server-side logic, build responsive user interfaces, and deliver complete, scalable solutions. 
         </motion.p>
       </div>
 
