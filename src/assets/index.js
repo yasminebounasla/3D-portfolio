@@ -17,6 +17,8 @@ import reactjs from "./tech/reactjs.png";
 import tailwind from "./tech/tailwind.png";
 import express from "./tech/express.jpg";
 import prisma from "./tech/prisma.png";
+import c from "./tech/c.png";
+import java from "./tech/java.png";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -53,5 +55,6 @@ export {
   express,
   prisma,
   herobg,
-  web
+  web,
+  c
 };

@@ -16,7 +16,9 @@ import {
   chefClaude,
   travelJournal,
   weatherApp,
-  web
+  web,
+  c,
+  java
 } from "../assets";
 
 export const navLinks = [
@@ -93,6 +95,14 @@ const technologies = [
   {
     name: "React Native",
     icon: reactjs,
+  },
+   {
+    name: "Java",
+    icon: java,
+  },
+   {
+    name: "C",
+    icon: c,
   },
   {
     name: "docker",
