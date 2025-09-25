@@ -2,6 +2,7 @@
 
 This is my personal portfolio where I showcase my projects and work.  
 It highlights the skills I’ve been building in web development, including frontend, backend, and mobile.
+
 ![Portfolio Screenshot](./public/screenShot.png)
 
 ## 🌐 Live Demo
