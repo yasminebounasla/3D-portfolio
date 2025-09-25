@@ -2,7 +2,7 @@
 
 This is my personal portfolio where I showcase my projects and work.  
 It highlights the skills I’ve been building in web development, including frontend, backend, and mobile.
-![Portfolio Screenshot](public/screenShot.png)
+![Portfolio Screenshot](./public/screenShot.png)
 
 ## 🌐 Live Demo
 🔗 [View Portfolio](https://portfolio-liart-eight-63.vercel.app)
