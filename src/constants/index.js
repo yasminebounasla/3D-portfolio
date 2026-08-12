@@ -181,7 +181,7 @@ const projects = [
       },
     ],
     image: collabNote,
-    source_code_link: "https://github.com/yasminebounasla/web-journey/tree/challenge-02-backend",
+    source_code_link: "https://github.com/yasminebounasla/web-journey",
   },
   {
     name: "Weather App",
