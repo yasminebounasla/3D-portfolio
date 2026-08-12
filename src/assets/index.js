@@ -4,7 +4,7 @@ import mobile from "./mobile.png";
 import github from "./github.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
-import herobg from "./herobg.png";
+import herobg from "./herobg.webp";
 
 import css from "./tech/css.png";
 import docker from "./tech/docker.png";
@@ -20,13 +20,13 @@ import prisma from "./tech/prisma.png";
 import c from "./tech/c.png";
 import java from "./tech/java.png";
 
-import carrent from "./carrent.png";
-import jobit from "./jobit.png";
-import tripguide from "./tripguide.png";
-import travelJournal from "./travelJournal.png";
-import weatherApp from "./weatherApp.png";
-import collabNote from "./collabNote.png";
-import chefClaude from "./chefClaude.png";
+import carrent from "./carrent.webp";
+import jobit from "./jobit.webp";
+import tripguide from "./tripguide.webp";
+import travelJournal from "./travelJournal.webp";
+import weatherApp from "./weatherApp.webp";
+import collabNote from "./collabNote.webp";
+import chefClaude from "./chefClaude.webp";
 import web from "./web.png";
 import soon from "./soon.png"
 
