@@ -6,7 +6,7 @@ It highlights the skills I’ve been building in web development, including fron
 ![Portfolio Screenshot](./public/screenShot.png)
 
 ## 🌐 Live Demo
-🔗 [View Portfolio](https://portfolio-liart-eight-63.vercel.app)
+🔗 [View Portfolio](https://portfolio-liart-eight-63.vercel.app) 
 
 ## 📖 About
 The portfolio is designed to share my recent projects and progress.  
