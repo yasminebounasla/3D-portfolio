@@ -4,7 +4,6 @@ import mobile from "./mobile.png";
 import github from "./github.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
-import herobg from "./herobg.webp";
 
 import css from "./tech/css.png";
 import docker from "./tech/docker.png";
@@ -19,6 +18,12 @@ import express from "./tech/express.jpg";
 import prisma from "./tech/prisma.png";
 import c from "./tech/c.png";
 import java from "./tech/java.png";
+import python from "./tech/python.svg";
+import tensorflow from "./tech/tensorflow.svg";
+import pytorch from "./tech/pytorch.svg";
+import opencv from "./tech/opencv.svg";
+import scikitlearn from "./tech/scikitlearn.svg";
+import visionEye from "./tech/vision-eye.svg";
 
 import carrent from "./carrent.webp";
 import jobit from "./jobit.webp";
@@ -55,9 +60,14 @@ export {
   chefClaude,
   express,
   prisma,
-  herobg,
   web,
   java,
   c,
-  soon
+  soon,
+  python,
+  tensorflow,
+  pytorch,
+  opencv,
+  scikitlearn,
+  visionEye
 };
