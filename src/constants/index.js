@@ -11,7 +11,7 @@ import {
   git,
   prisma,
   express,
-  docker, 
+  docker,
   collabNote,
   chefClaude,
   travelJournal,
@@ -19,7 +19,13 @@ import {
   web,
   c,
   java,
-  soon
+  soon,
+  python,
+  tensorflow,
+  pytorch,
+  opencv,
+  scikitlearn,
+  visionEye
 } from "../assets";
 
 export const navLinks = [
@@ -39,43 +45,51 @@ export const navLinks = [
 
 const services = [
   {
-    title: "web Developer",
+    title: "AI / Computer Vision",
+    icon: visionEye,
+  },
+  {
+    title: "Full-Stack Developer",
     icon: web,
   },
   {
-    title: "React Native Developer",
+    title: "Mobile Developer",
     icon: mobile,
-  },
-  {
-    title: "Backend Developer",
-    icon: backend,
   }
 ];
 
 const technologies = [
   {
-    name: "HTML 5",
-    icon: html,
+    name: "Python",
+    icon: python,
   },
   {
-    name: "CSS 3",
-    icon: css,
+    name: "TensorFlow",
+    icon: tensorflow,
   },
   {
-    name: "JavaScript",
-    icon: javascript,
+    name: "PyTorch",
+    icon: pytorch,
+  },
+  {
+    name: "OpenCV",
+    icon: opencv,
+  },
+  {
+    name: "Scikit-learn",
+    icon: scikitlearn,
   },
   {
     name: "React JS",
     icon: reactjs,
   },
   {
-    name: "Tailwind CSS",
-    icon: tailwind,
-  },
-  {
     name: "Node JS",
     icon: nodejs,
+  },
+  {
+    name: "Express",
+    icon: express,
   },
   {
     name: "MongoDB",
@@ -86,31 +100,55 @@ const technologies = [
     icon: prisma,
   },
   {
+    name: "Tailwind CSS",
+    icon: tailwind,
+  },
+  {
+    name: "Docker",
+    icon: docker,
+  },
+  {
     name: "git",
     icon: git,
   },
   {
-    name: "Express",
-    icon: express,
+    name: "JavaScript",
+    icon: javascript,
   },
-   {
+  {
+    name: "HTML 5",
+    icon: html,
+  },
+  {
+    name: "CSS 3",
+    icon: css,
+  },
+  {
     name: "Java",
     icon: java,
   },
-   {
+  {
     name: "C",
     icon: c,
   },
-  {
-    name: "docker",
-    icon: docker,
-  },
 ];
 
+// Catégories utilisées par les tabs de filtre dans Works.jsx.
+// Pour ajouter une nouvelle catégorie plus tard, ajoute juste une entrée ici.
+export const categories = [
+  { id: "all", label: "All" },
+  { id: "ai", label: "AI / ML" },
+  { id: "web", label: "Full-Stack" },
+  { id: "mobile", label: "Mobile" },
+];
 
+// Pour ajouter un projet : copie un objet ci-dessous, change les champs,
+// choisis category parmi "ai" / "web" / "mobile", et ajoute l'image dans
+// src/assets puis dans src/assets/index.js.
 const projects = [
   {
     name: "Travel Journal",
+    category: "web",
     description:
       "A full-stack application that allows users to document their travels. Users can create, read, update, and delete journal entries, making it easy to track trips, memories, and experiences. It also includes search and filtering features for quick access to past entries.",
     tags: [
@@ -136,6 +174,7 @@ const projects = [
   },
   {
     name: "Chef Claude",
+    category: "web",
     description:
       "Chef Claude is a smart recipe generator web app that helps users discover delicious recipes based on available ingredients. Users can generate personalized recipes, save favorites, view history, and manage their cooking experience through a profile system tailored to their needs.",
     tags: [
@@ -161,6 +200,7 @@ const projects = [
   },
   {
     name: "Collab Note",
+    category: "web",
     description:"A collaborative note-taking app that allows users to create, edit, and manage notes in one place. Features include search, sorting, and favorites to organize notes efficiently. It is designed to be simple, user-friendly, and effective for both individual and team productivity.",
     tags: [
       {
@@ -185,6 +225,7 @@ const projects = [
   },
   {
     name: "Weather App",
+    category: "web",
     description:
       "A simple weather application built with vanilla JavaScript. It fetches and displays the current weather and a weekly forecast for a selected city using the Open-Meteo API. The app focuses on simplicity, responsiveness, and delivering reliable weather updates to user.",
     tags: [
@@ -206,6 +247,7 @@ const projects = [
   },
   {
     name: "Habit Tracker App",
+    category: "mobile",
     description:
       "A mobile application built with React Native and Expo that helps users build and maintain good habits. It allows users to create, track, and manage daily habits with streaks and progress visualization. The app focuses on simplicity, clean design, and providing an intuitive experience for personal growth.",
     tags: [

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
 
 
 @tailwind base;
@@ -19,6 +19,10 @@ h1, h2, h3, .heroHeadText, .sectionHeadText {
   font-family: "Space Grotesk", sans-serif;
 }
 
+.font-mono {
+  font-family: "JetBrains Mono", monospace;
+}
+
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;
@@ -31,20 +35,21 @@ h1, h2, h3, .heroHeadText, .sectionHeadText {
   background: linear-gradient(to right, #434343, #000000);
 }
 
+/* accent-gradient : remplace l'ancien violet-gradient (#804dee) */
 .violet-gradient {
-  background: #804dee;
-  background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
-  background: -webkit-linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
+  background: #22d3ee;
+  background: linear-gradient(-90deg, #22d3ee 0%, rgba(34, 211, 238, 0) 100%);
+  background: -webkit-linear-gradient(-90deg, #22d3ee 0%, rgba(34, 211, 238, 0) 100%);
 }
 
 .green-pink-gradient {
-  background: #00cea8; /* ✅ fixed: removed quotes */
-  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
-  background: -webkit-linear-gradient(-90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+  background: #00cea8;
+  background: linear-gradient(90.13deg, #00cea8 1.9%, #22d3ee 97.5%);
+  background: -webkit-linear-gradient(-90.13deg, #00cea8 1.9%, #22d3ee 97.5%);
 }
 
 .orange-text-gradient {
-  background: #f12711; /* fallback */
+  background: #f12711;
   background: -webkit-linear-gradient(to top, #f12711, #f5af19);
   background: linear-gradient(to top, #f12711, #f5af19);
   -webkit-background-clip: text;
@@ -52,7 +57,7 @@ h1, h2, h3, .heroHeadText, .sectionHeadText {
 }
 
 .green-text-gradient {
-  background: #11998e; /* fallback */
+  background: #11998e;
   background: -webkit-linear-gradient(to top, #11998e, #38ef7d);
   background: linear-gradient(to top, #11998e, #38ef7d);
   -webkit-background-clip: text;
@@ -60,7 +65,7 @@ h1, h2, h3, .heroHeadText, .sectionHeadText {
 }
 
 .blue-text-gradient {
-  background: #56ccf2; /* fallback */
+  background: #56ccf2;
   background: -webkit-linear-gradient(to top, #2f80ed, #56ccf2);
   background: linear-gradient(to top, #2f80ed, #56ccf2);
   -webkit-background-clip: text;
@@ -68,12 +73,117 @@ h1, h2, h3, .heroHeadText, .sectionHeadText {
 }
 
 .pink-text-gradient {
-  background: #ec008c; /* fallback */
+  background: #ec008c;
   background: -webkit-linear-gradient(to top, #ec008c, #fc6767);
   background: linear-gradient(to top, #ec008c, #fc6767);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* ---------- THEME "VISION" ---------- */
+
+/* curseur reticle (desktop uniquement, voir Reticle.jsx) */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"], input, textarea {
+    cursor: none;
+  }
+}
+
+.reticle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 100;
+  transition: opacity 0.2s ease, transform 0.05s linear, width 0.15s ease, height 0.15s ease;
+}
+
+.reticle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #22d3ee;
+  border-radius: 50%;
+  transition: border-color 0.15s ease;
+}
+
+.reticle-active {
+  width: 34px;
+  height: 34px;
+  margin-left: -6px;
+  margin-top: -6px;
+}
+
+.reticle-active::before {
+  border-color: #f3f3f3;
+}
+
+.reticle-tick {
+  position: absolute;
+  background: #22d3ee;
+}
+.reticle-tick-t { left: 50%; top: -6px; width: 1px; height: 6px; transform: translateX(-50%); }
+.reticle-tick-b { left: 50%; bottom: -6px; width: 1px; height: 6px; transform: translateX(-50%); }
+.reticle-tick-l { top: 50%; left: -6px; height: 1px; width: 6px; transform: translateY(-50%); }
+.reticle-tick-r { top: 50%; right: -6px; height: 1px; width: 6px; transform: translateY(-50%); }
+
+/* scanline animée pour le Hero */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #22d3ee 50%, transparent 100%);
+  opacity: 0.6;
+  animation: scan-move 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scan-move {
+  0% { top: 10%; opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { top: 95%; opacity: 0; }
+}
+
+/* coins de "bounding box" au survol des cartes */
+.detect-frame {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: #22d3ee;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+.detect-frame-tl { top: -1px; left: -1px; border-top: 1.5px solid; border-left: 1.5px solid; }
+.detect-frame-tr { top: -1px; right: -1px; border-top: 1.5px solid; border-right: 1.5px solid; }
+.detect-frame-bl { bottom: -1px; left: -1px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+.detect-frame-br { bottom: -1px; right: -1px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
+
+.detect-card:hover .detect-frame {
+  opacity: 1;
+}
+
+/* variante statique, toujours visible mais discrète : encadre une
+   zone entière (ex: la grille Work) sans dépendre du survol */
+.detect-frame-static {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: #22d3ee;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.detect-frame-static.tl { top: -10px; left: -10px; border-top: 1.5px solid; border-left: 1.5px solid; }
+.detect-frame-static.tr { top: -10px; right: -10px; border-top: 1.5px solid; border-right: 1.5px solid; }
+.detect-frame-static.bl { bottom: -10px; left: -10px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+.detect-frame-static.br { bottom: -10px; right: -10px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
 
 /* canvas loader */
 .canvas-loader {
