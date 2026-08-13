@@ -8,30 +8,26 @@ import { fadeIn, textVariant } from '../utils/motions';
 
 const ServiceCard = ({ index, title, icon }) => {
   return (
-    <Tilt className='xs:w-[250px] w-full'>
-      <motion.div
-        variants={fadeIn("right", "spring", index * 0.5, 0.75)}
-        className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
-      >
-        <div
-          options={{
-            max: 45,
-            scale: 1,
-            speed: 450,
-          }}
-          className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'
-        >
-          <img
-            src={icon}
-            alt='web-development'
-            className='w-16 h-16 object-contain'
-          />
+    <Tilt
+      options={{ max: 25, scale: 1.02, speed: 400 }}
+      className='detect-card relative xs:w-[240px] w-full bg-black-100/60 backdrop-blur-sm border border-white/10 rounded-2xl py-8 px-8 min-h-[240px] flex justify-evenly items-center flex-col'
+    >
+      <span className="detect-frame detect-frame-tl" />
+      <span className="detect-frame detect-frame-tr" />
+      <span className="detect-frame detect-frame-bl" />
+      <span className="detect-frame detect-frame-br" />
 
-          <h3 className='text-white text-[20px] font-bold text-center'>
-            {title}
-          </h3>
-        </div>
-      </motion.div>
+      <div className='w-16 h-16 rounded-full bg-tertiary ring-1 ring-accent/40 flex items-center justify-center'>
+        <img
+          src={icon}
+          alt='service-icon'
+          className='w-8 h-8 object-contain'
+        />
+      </div>
+
+      <h3 className='text-white text-[18px] font-bold text-center font-mono'>
+        {title}
+      </h3>
     </Tilt>
   )
 }
@@ -48,14 +44,15 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
       >
-        I’m a passionate full-stack developer with solid experience in JavaScript, React, Node.js, Express, Prisma, and MongoDB. On the backend, I enjoy designing clean and scalable APIs, while on the frontend, I focus on building modern, user-friendly interfaces.
-        I also have a strong foundation in C and Java, with academic projects that strengthened my problem-solving skills. In addition, I have knowledge of React Native, allowing me to explore mobile application development.
-        I’m a quick learner who loves bringing ideas to life and collaborating on impactful solutions.
+        Full-stack developer (Licence in Software Engineering and Information Systems, USTHB), building complete applications across web and mobile — from React and React Native interfaces to Node.js / Express APIs.
+        I'm currently pursuing a Master's in AI and Computer Vision at USTHB, and expanding my work in that direction alongside full-stack development.
       </motion.p>
 
-      <div className='mt-20 flex flex-wrap gap-20 justify-center'>
+      <div className='mt-16 flex flex-wrap gap-8 justify-center'>
         {services.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
+          <motion.div key={service.title} variants={fadeIn("up", "spring", index * 0.3, 0.75)}>
+            <ServiceCard index={index} {...service} />
+          </motion.div>
         ))}
       </div>
 
@@ -63,4 +60,4 @@ const About = () => {
   )
 }
 
-export default SectionWrapper(About, "about");
+export default SectionWrapper(About, "about", "01 / profile");
