@@ -3,7 +3,9 @@ import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { staggerContainer } from "../utils/motions";
 
-const StarWrapper = (Component, idName) =>
+// idName: id de l'ancre (#about, #work...)
+// tag: petit label mono affiché au-dessus de la section, ex "01 / profile"
+const StarWrapper = (Component, idName, tag) =>
   function HOC() {
     return (
       <motion.section
@@ -16,6 +18,12 @@ const StarWrapper = (Component, idName) =>
         <span className='hash-span' id={idName}>
           &nbsp;
         </span>
+
+        {tag && (
+          <p className='font-mono text-accent text-[13px] tracking-widest mb-2'>
+            [ {tag} ]
+          </p>
+        )}
 
         <Component />
       </motion.section>
