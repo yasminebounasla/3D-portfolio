@@ -1,15 +1,39 @@
-# My Portfolio
+# Yasmine Bounasla — Portfolio
 
-This is my personal portfolio where I showcase my projects and work.  
-It highlights the skills I’ve been building in web development, including frontend, backend, and mobile.
+Personal 3D portfolio built with React and Three.js.
 
-![Portfolio Screenshot](./public/screenShot.png)
+**Live site:** [portfolio-liart-eight-63.vercel.app](https://portfolio-liart-eight-63.vercel.app)
 
-## 🌐 Live Demo
-🔗 [View Portfolio](https://portfolio-liart-eight-63.vercel.app) 
+![Portfolio screenshot](./screenshot.png)
+<!-- Remplace par une vraie capture (Hero de préférence), nommée "screenshot.png", à la racine du projet. -->
 
-## 📖 About
-The portfolio is designed to share my recent projects and progress.  
-I keep updating it as I learn new technologies and build more projects.
+## Stack
 
----
+**Frontend** — React, Tailwind CSS, Framer Motion
+**3D** — Three.js, React Three Fiber, @react-three/drei
+**Backend / tooling** — Node.js, Express, Prisma, MongoDB
+**AI / ML** — Python, TensorFlow, PyTorch, OpenCV, Scikit-learn
+**Contact form** — EmailJS
+
+## Run locally
+
+```bash
+git clone https://github.com/yasminebounasla/3D-portfolio.git
+cd 3D-portfolio
+npm install
+```
+
+Create a `.env` file at the root (see `.env.example`):
+```
+VITE_APP_EMAILJS_SERVICE_ID=your_service_id
+VITE_APP_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_APP_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+```bash
+npm run dev
+```
+
+## License
+
+Personal project. Feel free to draw inspiration from the code, but please don't reuse the content or assets as your own.
