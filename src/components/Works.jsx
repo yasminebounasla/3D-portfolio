@@ -24,9 +24,9 @@ const ProjectCard = ({
   tags,
   image,
   source_code_link,
-  category,
+  categories: projectCategories,
 }) => {
-  const cat = categoryStyle[category] || categoryStyle.web;
+  const cats = (projectCategories || ["web"]).map((c) => categoryStyle[c] || categoryStyle.web);
   const visibleTags = tags.slice(0, 3);
   const extraCount = tags.length - visibleTags.length;
 
@@ -48,12 +48,16 @@ const ProjectCard = ({
             className='w-full h-full object-cover'
           />
 
-          <span className={`absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/70 backdrop-blur-sm ring-1 ${cat.ring}`}>
-            <span className={`w-1.5 h-1.5 rounded-full ${cat.dot}`} />
-            <span className={`font-mono text-[10px] tracking-wider uppercase ${cat.text}`}>
-              {cat.label}
-            </span>
-          </span>
+          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[75%]">
+            {cats.map((cat, i) => (
+              <span key={i} className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/70 backdrop-blur-sm ring-1 ${cat.ring}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${cat.dot}`} />
+                <span className={`font-mono text-[10px] tracking-wider uppercase ${cat.text}`}>
+                  {cat.label}
+                </span>
+              </span>
+            ))}
+          </div>
 
           <div
             onClick={() => window.open(source_code_link, "_blank")}
@@ -97,7 +101,7 @@ const Works = () => {
   const filteredProjects =
     activeCategory === "all"
       ? projects
-      : projects.filter((p) => p.category === activeCategory);
+      : projects.filter((p) => p.categories.includes(activeCategory));
 
   return (
     <>

@@ -35,6 +35,18 @@ import chefClaude from "./chefClaude.webp";
 import web from "./web.png";
 import soon from "./soon.png"
 
+
+import habitTracker from "./habitTracker.png"
+import elexio from "./elexio.png"
+import transformer from "./transformer.png"
+import tumorClassification from "./tumorClassification.png"
+import breastCancer from "./breastCancer.png"
+import skylineWeatherApp from "./skylineWeather.png"
+import churnDetection from "./churnDetection.png"
+import multiAgents from "./multiAgents.png"
+import codeReviewAgent from "./codeReviewAgent.png"
+import pfe from "./pfe.png";
+
 export {
   logo,
   backend,
@@ -69,5 +81,15 @@ export {
   pytorch,
   opencv,
   scikitlearn,
-  visionEye
+  visionEye,
+  habitTracker,
+  elexio,
+  transformer,
+  tumorClassification,
+  breastCancer,
+  skylineWeatherApp,
+  churnDetection,
+  multiAgents,
+  codeReviewAgent,
+  pfe,
 };
