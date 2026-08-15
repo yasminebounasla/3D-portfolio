@@ -8,6 +8,7 @@ import {
   rotateX as rotateX2D,
   rotateY as rotateY2D,
   project as project2D,
+  buildIcosahedron,
 } from "../../utils/wireframe3d";
 
 const ACCENT = "#22d3ee";
@@ -51,31 +52,10 @@ const ScanGlobe3D = ({ dragRotation }) => {
 };
 
 // ---------- version Canvas 2D (filet de sécurité si pas de WebGL) ----------
-function buildGlobeLines(meridians = 10, parallels = 5, segments = 56) {
-  const lines = [];
-  for (let m = 0; m < meridians; m++) {
-    const lon = (m / meridians) * Math.PI * 2;
-    const pts = [];
-    for (let i = 0; i <= segments; i++) {
-      const lat = -Math.PI / 2 + (i / segments) * Math.PI;
-      pts.push([Math.cos(lat) * Math.cos(lon), Math.sin(lat), Math.cos(lat) * Math.sin(lon)]);
-    }
-    lines.push(pts);
-  }
-  for (let p = 1; p < parallels; p++) {
-    const lat = -Math.PI / 2 + (p / parallels) * Math.PI;
-    const r = Math.cos(lat);
-    const y = Math.sin(lat);
-    const pts = [];
-    for (let i = 0; i <= segments; i++) {
-      const lon = (i / segments) * Math.PI * 2;
-      pts.push([r * Math.cos(lon), y, r * Math.sin(lon)]);
-    }
-    lines.push(pts);
-  }
-  return lines;
-}
-const GLOBE_LINES_2D = buildGlobeLines();
+// Même maillage icosaèdre que le Hero (VisionCore) plutôt qu'une grille
+// latitude/longitude — plus propre, pas de lignes qui se resserrent aux
+// pôles, et cohérent visuellement avec le reste du site.
+const { vertices: GLOBE_VERTICES, edges: GLOBE_EDGES } = buildIcosahedron();
 const ACCENT_RGB = "34, 211, 238";
 
 const ScanGlobe2D = ({ dragRotation }) => {
@@ -117,19 +97,21 @@ const ScanGlobe2D = ({ dragRotation }) => {
         ctx.fillStyle = glow;
         ctx.fillRect(0, 0, width, height);
 
-        GLOBE_LINES_2D.forEach((pts) => {
+        for (const [a, b] of GLOBE_EDGES) {
+          let pa = rotateY2D(GLOBE_VERTICES[a], rotY);
+          pa = rotateX2D(pa, rotX);
+          let pb = rotateY2D(GLOBE_VERTICES[b], rotY);
+          pb = rotateX2D(pb, rotX);
+          const proja = project2D(pa, { cx, cy, scale, camZ: 3, focal: 3 });
+          const projb = project2D(pb, { cx, cy, scale, camZ: 3, focal: 3 });
+          const depth = (proja.depth + projb.depth) / 2;
+          ctx.strokeStyle = `rgba(${ACCENT_RGB}, ${0.15 + depth * 0.55})`;
+          ctx.lineWidth = 1;
           ctx.beginPath();
-          pts.forEach((v, i) => {
-            let p = rotateY2D(v, rotY);
-            p = rotateX2D(p, rotX);
-            const proj = project2D(p, { cx, cy, scale, camZ: 3, focal: 3 });
-            ctx.strokeStyle = `rgba(${ACCENT_RGB}, ${0.18 + proj.depth * 0.55})`;
-            if (i === 0) ctx.moveTo(proj.x, proj.y);
-            else ctx.lineTo(proj.x, proj.y);
-          });
-          ctx.lineWidth = 1.1;
+          ctx.moveTo(proja.x, proja.y);
+          ctx.lineTo(projb.x, projb.y);
           ctx.stroke();
-        });
+        }
 
         ctx.save();
         ctx.translate(cx, cy);
