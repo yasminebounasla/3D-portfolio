@@ -26,6 +26,7 @@ import {
   opencv,
   scikitlearn,
   visionEye,
+  expo,
   habitTracker,
   elexio,
   transformer,
@@ -35,7 +36,6 @@ import {
   churnDetection,
   multiAgents,
   codeReviewAgent,
-  pfe
 } from "../assets";
 
 export const navLinks = [
@@ -75,6 +75,8 @@ const technologies = [
   { name: "OpenCV", icon: opencv },
   { name: "Scikit-learn", icon: scikitlearn },
   { name: "React JS", icon: reactjs },
+  { name: "React Native", icon: reactjs },
+  { name: "Expo", icon: expo },
   { name: "Node JS", icon: nodejs },
   { name: "Express", icon: express },
   { name: "MongoDB", icon: mongodb },
@@ -116,7 +118,7 @@ const projects = [
       { name: "insightface", color: "pink-text-gradient" },
       { name: "easyocr", color: "orange-text-gradient" },
     ],
-    image: pfe,
+    image: codeReviewAgent,
     source_code_link: "https://github.com/yasminebounasla/Application-de-Transport-Securise-avec-Recommandation-et-OCR",
   },
   {
