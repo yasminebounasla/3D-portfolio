@@ -4,6 +4,7 @@ import {
   Decal,
   Float,
   Html,
+  OrbitControls,
   Preload,
   useTexture,
 } from "@react-three/drei";
@@ -33,16 +34,16 @@ const Ball = ({ imgUrl, name, position = [0, 0, 0], scale = 1 }) => {
   return (
     <group position={position} scale={scale}>
       <Float speed={1.75} rotationIntensity={1} floatIntensity={1.2}>
-        <OrbitRing radius={0.85} tilt={[Math.PI / 2.4, 0, 0]} speed={0.5} opacity={0.5} />
-        <OrbitRing radius={0.85} tilt={[Math.PI / 1.6, Math.PI / 5, 0]} speed={-0.35} opacity={0.25} />
+        <OrbitRing radius={0.95} tilt={[Math.PI / 2.4, 0, 0]} speed={0.5} opacity={0.55} />
+        <OrbitRing radius={0.95} tilt={[Math.PI / 1.6, Math.PI / 5, 0]} speed={-0.35} opacity={0.3} />
 
-        <mesh scale={0.78}>
+        <mesh scale={0.88}>
           <icosahedronGeometry args={[1, 1]} />
           <meshBasicMaterial color={ACCENT} wireframe transparent opacity={0.35} />
         </mesh>
 
         <mesh
-          scale={0.7}
+          scale={0.8}
           onPointerOver={(e) => { e.stopPropagation(); setHovered(true); }}
           onPointerOut={() => setHovered(false)}
         >
@@ -102,7 +103,7 @@ const FlatTechGrid = ({ technologies }) => (
 const TechGridCanvas = ({ technologies }) => {
   const [supported] = useState(() => isWebGLAvailable());
   const cols = 6;
-  const spacing = 2.3;
+  const spacing = 2.6;
   const rows = Math.ceil(technologies.length / cols);
 
   if (!supported) {
@@ -133,6 +134,7 @@ const TechGridCanvas = ({ technologies }) => {
           })}
         </Suspense>
 
+        <OrbitControls enableZoom={false} enablePan={false} />
         <Preload all />
       </Canvas>
     </div>
