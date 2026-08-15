@@ -1,108 +1,109 @@
-import React, { Suspense, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Preload, Float, Points, PointMaterial } from "@react-three/drei";
-import * as THREE from "three";
-import * as random from "maath/random/dist/maath-random.esm";
+import React, { useEffect, useRef } from "react";
+import { buildIcosahedron, rotateX, rotateY, project } from "../../utils/wireframe3d";
 
-import CanvasLoader from "../Loader";
+const ACCENT = "34, 211, 238";
 
-const ACCENT = "#22d3ee";
+const NODES = [
+  [2.1, 1.0, 0.3],
+  [-1.8, -0.8, 1.0],
+  [1.1, -1.5, -1.2],
+];
 
-const DetectedNode = ({ position }) => (
-  <Float speed={2} rotationIntensity={1.2} floatIntensity={1.4}>
-    <lineSegments position={position}>
-      <edgesGeometry args={[new THREE.BoxGeometry(0.45, 0.45, 0.45)]} />
-      <lineBasicMaterial color={ACCENT} transparent opacity={0.6} />
-    </lineSegments>
-  </Float>
-);
-
-const ScanRing = ({ radius, axis, speed, color = ACCENT, opacity = 0.3, rotation = [0, 0, 0] }) => {
-  const ref = useRef();
-  useFrame((_, delta) => {
-    ref.current.rotation[axis] += delta * speed;
-  });
-  return (
-    <mesh ref={ref} rotation={rotation}>
-      <torusGeometry args={[radius, 0.008, 8, 100]} />
-      <meshBasicMaterial color={color} transparent opacity={opacity} />
-    </mesh>
-  );
-};
-
-// dragRotation : ref partagée avec Hero.jsx, mise à jour par du vrai
-// mousedown/mousemove natif (voir Hero.jsx) — pas de dépendance à
-// OrbitControls, donc pas de risque d'incompatibilité de version.
-const VisionCore = ({ dragRotation }) => {
-  const rootRef = useRef();
-  const coreRef = useRef();
-  const autoY = useRef(0);
-  const [points] = useState(() =>
-    random.inSphere(new Float32Array(1500), { radius: 2.8 })
-  );
-
-  useFrame((_, delta) => {
-    autoY.current += delta * 0.03;
-    if (rootRef.current) {
-      rootRef.current.rotation.y = autoY.current + (dragRotation?.current || 0);
-    }
-    coreRef.current.rotation.y += delta * 0.12;
-    coreRef.current.rotation.x += delta * 0.03;
-  });
-
-  return (
-    <group ref={rootRef} position={[2.6, 0, -1]} scale={0.85}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[5, 5, 5]} intensity={1} color={ACCENT} />
-      <pointLight position={[-5, -3, -5]} intensity={0.3} color="#ffffff" />
-
-      <group ref={coreRef}>
-        <mesh>
-          <icosahedronGeometry args={[1.5, 1]} />
-          <meshBasicMaterial color={ACCENT} wireframe transparent opacity={0.75} />
-        </mesh>
-        <mesh>
-          <icosahedronGeometry args={[1.46, 1]} />
-          <meshStandardMaterial color="#04060f" emissive="#0b2530" roughness={0.4} transparent opacity={0.85} />
-        </mesh>
-      </group>
-
-      <ScanRing radius={2.1} axis="x" speed={0.25} />
-      <ScanRing radius={2.4} axis="z" speed={-0.18} color="#ffffff" opacity={0.15} rotation={[Math.PI / 4, 0, 0]} />
-
-      <Points positions={points} stride={3}>
-        <PointMaterial
-          transparent
-          color={ACCENT}
-          size={0.016}
-          sizeAttenuation
-          depthWrite={false}
-          opacity={0.7}
-        />
-      </Points>
-
-      <DetectedNode position={[2.7, 1.2, 0.4]} />
-      <DetectedNode position={[-2.3, -1, 1.3]} />
-      <DetectedNode position={[1.4, -1.9, -1.6]} />
-    </group>
-  );
-};
+const { vertices, edges } = buildIcosahedron();
 
 const VisionCoreCanvas = ({ dragRotation }) => {
-  return (
-    <Canvas
-      frameloop="always"
-      dpr={[1, 2]}
-      camera={{ position: [9, 2, 6], fov: 30 }}
-      gl={{ preserveDrawingBuffer: true, alpha: true }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        <VisionCore dragRotation={dragRotation} />
-      </Suspense>
+  const canvasRef = useRef(null);
+  const rafRef = useRef(0);
+  const autoY = useRef(0);
+  const sizeRef = useRef({ width: 0, height: 0 });
 
-      <Preload all />
-    </Canvas>
-  );
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    // ResizeObserver : se déclenche dès que le parent a une vraie taille
+    // (fiable même si le layout n'est pas encore posé au premier rendu,
+    // contrairement à une simple lecture de clientWidth dans useEffect).
+    const ro = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      sizeRef.current = { width, height };
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    });
+    ro.observe(canvas.parentElement);
+
+    const draw = () => {
+      const { width, height } = sizeRef.current;
+      if (width > 0 && height > 0) {
+        autoY.current += 0.006;
+        const rotY = autoY.current + (dragRotation?.current || 0);
+        const rotX = 0.25;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const cx = width * 0.65;
+        const cy = height * 0.5;
+        const scale = Math.min(width, height) * 0.3;
+
+        const projected = vertices.map((v) => {
+          let p = rotateY(v, rotY);
+          p = rotateX(p, rotX);
+          return project(p, { cx, cy, scale });
+        });
+
+        for (const [a, b] of edges) {
+          const pa = projected[a], pb = projected[b];
+          const depth = (pa.depth + pb.depth) / 2;
+          ctx.strokeStyle = `rgba(${ACCENT}, ${0.15 + depth * 0.55})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(pa.x, pa.y);
+          ctx.lineTo(pb.x, pb.y);
+          ctx.stroke();
+        }
+
+        [
+          { ry: 0.35, rot: rotY * 0.6, alpha: 0.25, color: ACCENT, mult: 1.4 },
+          { ry: 0.55, rot: -rotY * 0.4 + 0.6, alpha: 0.12, color: "255,255,255", mult: 1.6 },
+        ].forEach(({ ry, rot, alpha, color, mult }) => {
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(rot);
+          ctx.strokeStyle = `rgba(${color}, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, scale * mult, scale * mult * ry, 0, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        });
+
+        NODES.forEach((n, i) => {
+          let p = rotateY(n, rotY * 0.7 + i);
+          p = rotateX(p, rotX);
+          const proj = project(p, { cx, cy, scale });
+          const size = 10 * proj.depth;
+          ctx.strokeStyle = `rgba(${ACCENT}, ${0.4 + proj.depth * 0.4})`;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(proj.x - size / 2, proj.y - size / 2, size, size);
+        });
+      }
+
+      rafRef.current = requestAnimationFrame(draw);
+    };
+
+    rafRef.current = requestAnimationFrame(draw);
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      ro.disconnect();
+    };
+  }, [dragRotation]);
+
+  return <canvas ref={canvasRef} className="w-full h-full block" />;
 };
 
 export default VisionCoreCanvas;
