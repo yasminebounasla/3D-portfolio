@@ -6,18 +6,18 @@ function App() {
   return (
     <BrowserRouter>
        <div className="relative z-0 bg-primary">
-        <Reticle />
-        <div>
-          <Navbar />
-          <Hero />
+        {/* fond étoilé fixe sur toute la page, toujours derrière le contenu */}
+        <div className="fixed inset-0 -z-10 pointer-events-none">
+          <StarsCanvas />
         </div>
+
+        <Reticle />
+        <Navbar />
+        <Hero />
         <About />
         <Tech />
         <Works />
-        <div className='relative z-0'>
-          <Contact />
-          <StarsCanvas />
-        </div>
+        <Contact />
        </div>
     </BrowserRouter>
   )
