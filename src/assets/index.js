@@ -24,6 +24,7 @@ import pytorch from "./tech/pytorch.svg";
 import opencv from "./tech/opencv.svg";
 import scikitlearn from "./tech/scikitlearn.svg";
 import visionEye from "./tech/vision-eye.svg";
+import expo from "./tech/expo.svg";
 
 import carrent from "./carrent.webp";
 import jobit from "./jobit.webp";
@@ -45,7 +46,6 @@ import skylineWeatherApp from "./skylineWeather.png"
 import churnDetection from "./churnDetection.png"
 import multiAgents from "./multiAgents.png"
 import codeReviewAgent from "./codeReviewAgent.png"
-import pfe from "./pfe.png";
 
 export {
   logo,
@@ -82,6 +82,7 @@ export {
   opencv,
   scikitlearn,
   visionEye,
+  expo,
   habitTracker,
   elexio,
   transformer,
@@ -90,6 +91,5 @@ export {
   skylineWeatherApp,
   churnDetection,
   multiAgents,
-  codeReviewAgent,
-  pfe,
+  codeReviewAgent
 };
