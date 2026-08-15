@@ -31,7 +31,11 @@ const ProjectCard = ({
   const extraCount = tags.length - visibleTags.length;
 
   return (
-    <motion.div variants={fadeIn("up", "spring", (index % 6) * 0.15, 0.75)}>
+    <motion.div
+      variants={fadeIn("up", "spring", (index % 6) * 0.15, 0.75)}
+      initial="hidden"
+      animate="show"
+    >
       <Tilt
         options={{ max: 20, scale: 1.02, speed: 350 }}
         className='detect-card group relative bg-black-100/60 border border-white/10 rounded-2xl overflow-hidden h-full flex flex-col'
@@ -144,7 +148,7 @@ const Works = () => {
 
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
           {filteredProjects.map((project, index) => (
-            <ProjectCard key={`project-${index}`} index={index} {...project} />
+            <ProjectCard key={project.name} index={index} {...project} />
           ))}
         </div>
       </div>
