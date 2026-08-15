@@ -4,7 +4,6 @@ import {
   Decal,
   Float,
   Html,
-  OrbitControls,
   Preload,
   useTexture,
 } from "@react-three/drei";
@@ -30,44 +29,56 @@ const OrbitRing = ({ radius, tilt, speed, opacity }) => {
 const Ball = ({ imgUrl, name, position = [0, 0, 0], scale = 1 }) => {
   const [decal] = useTexture([imgUrl]);
   const [hovered, setHovered] = useState(false);
+  const spinRef = useRef();
+
+  // Rotation auto et indépendante pour chaque bille — c'est ce qui donnait
+  // l'effet "chaque bille tourne seule" avant que j'ajoute OrbitControls.
+  useFrame((_, delta) => {
+    if (spinRef.current) {
+      spinRef.current.rotation.y += delta * 0.35;
+      spinRef.current.rotation.x += delta * 0.08;
+    }
+  });
 
   return (
     <group position={position} scale={scale}>
-      <Float speed={1.75} rotationIntensity={1} floatIntensity={1.2}>
-        <OrbitRing radius={0.95} tilt={[Math.PI / 2.4, 0, 0]} speed={0.5} opacity={0.55} />
-        <OrbitRing radius={0.95} tilt={[Math.PI / 1.6, Math.PI / 5, 0]} speed={-0.35} opacity={0.3} />
+      <Float speed={1.75} rotationIntensity={0.4} floatIntensity={1.2}>
+        <group ref={spinRef}>
+          <OrbitRing radius={0.85} tilt={[Math.PI / 2.4, 0, 0]} speed={0.5} opacity={0.5} />
+          <OrbitRing radius={0.85} tilt={[Math.PI / 1.6, Math.PI / 5, 0]} speed={-0.35} opacity={0.25} />
 
-        <mesh scale={0.88}>
-          <icosahedronGeometry args={[1, 1]} />
-          <meshBasicMaterial color={ACCENT} wireframe transparent opacity={0.35} />
-        </mesh>
+          <mesh scale={0.78}>
+            <icosahedronGeometry args={[1, 1]} />
+            <meshBasicMaterial color={ACCENT} wireframe transparent opacity={0.35} />
+          </mesh>
 
-        <mesh
-          scale={0.8}
-          onPointerOver={(e) => { e.stopPropagation(); setHovered(true); }}
-          onPointerOut={() => setHovered(false)}
-        >
-          <icosahedronGeometry args={[1, 1]} />
-          <meshPhysicalMaterial
-            color='#0e2530'
-            transparent
-            opacity={0.55}
-            roughness={0.08}
-            metalness={0.15}
-            clearcoat={1}
-            clearcoatRoughness={0.1}
-            polygonOffset
-            polygonOffsetFactor={-5}
-            flatShading
-          />
-          <Decal
-            position={[0, 0, 1]}
-            rotation={[2 * Math.PI, 0, 6.25]}
-            scale={1}
-            map={decal}
-            flatShading
-          />
-        </mesh>
+          <mesh
+            scale={0.7}
+            onPointerOver={(e) => { e.stopPropagation(); setHovered(true); }}
+            onPointerOut={() => setHovered(false)}
+          >
+            <icosahedronGeometry args={[1, 1]} />
+            <meshPhysicalMaterial
+              color='#0e2530'
+              transparent
+              opacity={0.55}
+              roughness={0.08}
+              metalness={0.15}
+              clearcoat={1}
+              clearcoatRoughness={0.1}
+              polygonOffset
+              polygonOffsetFactor={-5}
+              flatShading
+            />
+            <Decal
+              position={[0, 0, 1]}
+              rotation={[2 * Math.PI, 0, 6.25]}
+              scale={1}
+              map={decal}
+              flatShading
+            />
+          </mesh>
+        </group>
 
         {hovered && (
           <Html center distanceFactor={8} style={{ pointerEvents: "none" }}>
@@ -103,7 +114,7 @@ const FlatTechGrid = ({ technologies }) => (
 const TechGridCanvas = ({ technologies }) => {
   const [supported] = useState(() => isWebGLAvailable());
   const cols = 6;
-  const spacing = 2.6;
+  const spacing = 2.3;
   const rows = Math.ceil(technologies.length / cols);
 
   if (!supported) {
@@ -111,12 +122,14 @@ const TechGridCanvas = ({ technologies }) => {
   }
 
   return (
-    <div style={{ height: `${rows * 130 + 60}px` }}>
+    // +80px de marge (au lieu de +60) pour laisser respirer le wireframe
+    // en haut/bas et éviter qu'il se fasse rogner par le conteneur.
+    <div style={{ height: `${rows * 130 + 80}px` }}>
       <Canvas
         frameloop='always'
         dpr={[1, 1.5]}
         gl={{ preserveDrawingBuffer: true, alpha: true }}
-        camera={{ position: [0, 0, 14], fov: 32 }}
+        camera={{ position: [0, 0, 15], fov: 32 }}
       >
         <ambientLight intensity={0.6} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
@@ -134,7 +147,6 @@ const TechGridCanvas = ({ technologies }) => {
           })}
         </Suspense>
 
-        <OrbitControls enableZoom={false} enablePan={false} />
         <Preload all />
       </Canvas>
     </div>
